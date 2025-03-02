@@ -16,6 +16,7 @@ import { useGetArticles } from "@/usecases/use-get-articles";
 import { useDeleteArticles } from "@/usecases/use-delete-articles";
 import { AppDialog } from "@/components/app-dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { AppHighlight } from "@/components/app-highlight";
 
 export default function Page() {
    // State for search, pagination and filtering
@@ -75,6 +76,7 @@ export default function Page() {
             <SidebarInset>
                <AppHeader />
                <main className="flex flex-1 flex-col gap-4 p-4 bg-gray-50">
+                  <AppHighlight isFormActive={showForm} />
                   <div className="bg-white rounded p-6">
                      <div className="flex justify-between mb-4 ps-5">
                         <div className="flex items-center w-1/3">
