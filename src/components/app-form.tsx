@@ -18,7 +18,6 @@ export function AppForm({ setShowForm }: AppFormProps) {
    const { mutate: updateArticle, isLoading: isUpdating } = useUpdateArticle();
    const { data: articleData, isLoading: isFetching } = useGetArticleById(id);
 
-   // Jika mode edit, isi form dengan data dari API
    useEffect(() => {
       if (articleData) {
          setArticle({ title: articleData.title, content: articleData.content });
@@ -87,9 +86,6 @@ export function AppForm({ setShowForm }: AppFormProps) {
             <div className="flex gap-2">
                <Button onClick={handleSubmit} disabled={isCreating || isUpdating}>
                   {isCreating || isUpdating ? "Saving..." : "Save"}
-               </Button>
-               <Button variant="outline" onClick={() => setShowForm(false)}>
-                  Cancel
                </Button>
             </div>
          </div>

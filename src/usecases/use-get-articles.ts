@@ -1,15 +1,10 @@
 import { getArticles } from "@/services/get-articles";
 import { useQuery } from "react-query"
 
-export const useGetArticles = () => {
+export function useGetArticles(search: string, page: number, page_size: number) {
    return useQuery({
-      queryKey: ['get-articles'],
-      queryFn: getArticlesData,
-      retry: 1
-  });
-}
-
-const getArticlesData = async () => {
-   const data = await getArticles()
-   return data
+      queryKey: ["articles", search, page, page_size],
+      queryFn: () => getArticles({ search, page, page_size }),
+      keepPreviousData: true,
+   });
 }
