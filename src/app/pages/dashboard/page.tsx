@@ -18,6 +18,7 @@ import { AppDialog } from "@/components/app-dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AppHighlight } from "@/components/app-highlight";
 import { useQueryClient } from "react-query";
+import { formatDate } from "@/lib/format-date";
 
 export default function Page() {
    const queryClient = useQueryClient();
@@ -128,18 +129,18 @@ export default function Page() {
                               <TableHeader className="bg-[#51B15C0A]">
                                  <TableRow>
                                     <TableHead className="text-center text-primary">No</TableHead>
-                                    <TableHead className="text-primary">Date</TableHead>
-                                    <TableHead className="text-primary">Title</TableHead>
-                                    <TableHead className="text-primary">Content</TableHead>
+                                    <TableHead className="text-center text-primary">Date</TableHead>
+                                    <TableHead className="text-center text-primary">Title</TableHead>
+                                    <TableHead className="text-center text-primary">Content</TableHead>
                                     <TableHead className="text-center text-primary">Action</TableHead>
                                  </TableRow>
                               </TableHeader>
-                              <TableBody>
+                              <TableBody className="text-center">
                                  {data?.articles.length ? (
                                     data.articles.map((article, index) => (
                                        <TableRow key={article.id}>
                                           <TableCell className="text-center">{startRecord + index}</TableCell>
-                                          <TableCell>{article.created_at}</TableCell>
+                                          <TableCell>{formatDate(article.created_at)}</TableCell>
                                           <TableCell>{article.title}</TableCell>
                                           <TableCell>{article.content.substring(0, 50)}...</TableCell>
                                           <TableCell className="text-center gap-1 flex justify-center">
