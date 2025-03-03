@@ -17,8 +17,11 @@ import { useDeleteArticles } from "@/usecases/use-delete-articles";
 import { AppDialog } from "@/components/app-dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AppHighlight } from "@/components/app-highlight";
+import { useQueryClient } from "react-query";
 
 export default function Page() {
+   const queryClient = useQueryClient();
+
    // State for search, pagination and filtering
    const [searchTerm, setSearchTerm] = useState("");
    const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -50,7 +53,10 @@ export default function Page() {
    const handleDeleteConfirm = () => {
       if (selectedArticle) {
          deleteArticle(selectedArticle, {
-            onSuccess: () => setDialogOpen(false),
+            onSuccess: () => {
+               queryClient.invalidateQueries("articles");
+               setDialogOpen(false);
+            },
          });
       }
    };

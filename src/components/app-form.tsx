@@ -7,6 +7,7 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { useEffect } from "react";
 import { useGetArticleById } from "@/usecases/use-get-articles-id";
+import { useQueryClient } from "react-query";
 
 interface AppFormProps {
    setShowForm: (show: boolean) => void;
@@ -14,6 +15,8 @@ interface AppFormProps {
 
 export function AppForm({ setShowForm }: AppFormProps) {
    const { id, title, content, setArticle, resetArticle } = useArticleStore();
+   const queryClient = useQueryClient();
+
    const { mutate: createArticle, isLoading: isCreating } = useCreateArticle();
    const { mutate: updateArticle, isLoading: isUpdating } = useUpdateArticle();
    const { data: articleData, isLoading: isFetching } = useGetArticleById(id);
@@ -35,6 +38,7 @@ export function AppForm({ setShowForm }: AppFormProps) {
             { id, title, content },
             {
                onSuccess: () => {
+                  queryClient.invalidateQueries("articles");
                   resetArticle();
                   setShowForm(false);
                },
@@ -48,6 +52,7 @@ export function AppForm({ setShowForm }: AppFormProps) {
             { title, content },
             {
                onSuccess: () => {
+                  queryClient.invalidateQueries("articles");
                   resetArticle();
                   setShowForm(false);
                },
